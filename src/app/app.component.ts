@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PexelPhotoService } from './services/pexel-photo.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'photo-search';
+
+    search: String
+    perPage: Number
+    data: String[]
+
+    constructor(private pexelService:PexelPhotoService) {
+      this.pexelService.getData(this.search, this.perPage);
+    }
+
+    searchPhotos() {
+      this.pexelService.getData(this.search, this.perPage).subscribe((data) => {
+        console.log(data)
+        this.data = data.photos
+      }, (error) => {
+        console.error("ERROR:::", error)
+      })
+    }
+
 }
