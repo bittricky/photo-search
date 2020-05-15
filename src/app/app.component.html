@@ -1,12 +1,32 @@
-<div class="content" role="main">
-  <h1>Photo Search</h1>
-  <input type="text" [(ngModel)]="search" placeholder="Search Photos...">
-  <input type="number" [(ngModel)]="perPage">
-  <button (click)="searchPhotos()">Search</button>
+<div class="container" role="main">
 
-  <div class="photos">
-    <ul *ngFor="let photos of data">
-      <img src="{{photos.src.medium}}" alt="photo" />
-    </ul>
-  </div>
+  <section class="section">
+    <h1 class="title">Photo Search</h1>
+    <div class="field has-addons">
+      <div class="control">
+        <input class="input" type="text" [(ngModel)]="search" placeholder="Search Photos...">
+      </div>
+      <div class="control">
+        <input class="input" type="number" [(ngModel)]="perPage">
+      </div>
+      <div class="control">
+        <button class="button is-primary" (click)="searchPhotos()">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="tile is-ancestor" [ngSwitch]="empty">
+      <div *ngSwitchCase="true">
+        <p class="subtitle">Sorry, we could not find any photos.</p>
+      </div>
+      <div *ngSwitchCase="false">
+        <div class="tile is-parent" *ngFor="let photos of data">
+          <div class="tile">
+            <img class="image" src="{{photos.src.medium}}" alt="photo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

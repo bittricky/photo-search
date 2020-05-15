@@ -12,14 +12,19 @@ export class AppComponent {
     perPage: Number
     data: String[]
 
+    public empty: boolean;
+
     constructor(private pexelService:PexelPhotoService) {
       this.pexelService.getData(this.search, this.perPage);
     }
 
     searchPhotos() {
       this.pexelService.getData(this.search, this.perPage).subscribe((data) => {
-        console.log(data)
-        this.data = data.photos
+        this.data = data.photos;
+        if (this.data.length === 0) {
+          this.empty = true;
+        }
+        this.empty = false;
       }, (error) => {
         console.error("ERROR:::", error)
       })
